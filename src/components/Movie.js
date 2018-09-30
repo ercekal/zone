@@ -17,7 +17,6 @@ const Image = styled.img`
   width: 80px;
 `
 const Movie = ({movie, genresList}) => {
-  console.log(movie);
   const link = `https://image.tmdb.org/t/p/w500${movie.poster_path}`
   return (
     <StyledDiv>

@@ -5,6 +5,7 @@ export default function(state = [], action) {
   switch (action.type) {
     case FETCH_GENRES:
     return {...state, genres: action.payload };
+    default:
+    return state
   }
-  return state;
 }

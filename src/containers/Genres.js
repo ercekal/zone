@@ -11,10 +11,6 @@ const StyledDiv = styled.div`
 `
 class Genres extends Component {
 
-  constructor(props) {
-    super(props)
-  }
-
   renderValidGenres = () => {
     const {validGenres, genres} = this.props
     const genreList = genres.filter(genre => validGenres.includes(genre.id))
@@ -26,7 +22,6 @@ class Genres extends Component {
   }
 
   render() {
-    const {validGenres, genres} = this.props
     return <StyledDiv>{this.renderValidGenres()}</StyledDiv>
   }
 }

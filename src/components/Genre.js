@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
-import {uniq, flatten, isNil} from 'lodash';
-import { fetchMovies, fetchGenres } from '../actions';
 
 const StyledDiv = styled.div`
   padding-right: 5px;
@@ -18,18 +14,14 @@ class Genre extends Component {
   }
 
   render() {
-    const {genre} = this.props
+    const {genre, onChange} = this.props
     return(
       <StyledDiv>
-        <input type="checkbox" onChange={this.props.onChange} defaultChecked={this.state.checked}/>
+        <input type="checkbox" onChange={onChange} defaultChecked={this.state.checked}/>
         <p>{genre.name}</p>
       </StyledDiv>
     )
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchMovies, fetchGenres }, dispatch)
-}
-
-export default connect(null, mapDispatchToProps)(Genre);
+export default Genre;
