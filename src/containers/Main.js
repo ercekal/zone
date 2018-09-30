@@ -22,7 +22,6 @@ class Main extends Component {
   componentWillReceiveProps(nextProps) {
     const {movies} = nextProps
     if (movies) {
-      console.log(movies)
       const genresList = movies.map(m => {
         return m.genre_ids
       })
@@ -63,7 +62,7 @@ function mapStateToProps(state) {
   return {
     movies: state.movies.movies,
     genres: state.genres.genres,
-    selectedGenres: state.genres
+    selectedGenres: state.selectedGenres.selectedGenres
   }
 }
 

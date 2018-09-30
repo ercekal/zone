@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const FETCH_MOVIES = 'FETCH_MOVIES';
 export const FETCH_GENRES = 'FETCH_GENRES';
-export const SELECT_GENRE = 'SELECT_GENRE';
+export const UPDATE_GENRE = 'UPDATE_GENRE';
 
 const API_KEY = "b0659a2e955ea3f4ebab1b70f16905bd"
 
@@ -34,7 +34,7 @@ export function selectGenre(genre) {
   console.log(genre)
   return dispatch => {
     dispatch({
-      type: SELECT_GENRE,
+      type: UPDATE_GENRE,
       payload: genre.id
     })
   }

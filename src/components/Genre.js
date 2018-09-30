@@ -13,21 +13,6 @@ class Genre extends Component {
     }
   }
 
-  componentWillMount() {
-    this.props.fetchMovies()
-    this.props.fetchGenres()
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const {movies} = nextProps
-    const genresList = movies.map(m => {
-      return m.genre_ids
-    })
-    this.setState({
-      validGenres: uniq(flatten(genresList))
-    })
-  }
-
   render() {
     const {genre} = this.props
     return(
@@ -43,11 +28,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ fetchMovies, fetchGenres }, dispatch)
 }
 
-function mapStateToProps(state) {
-  return {
-    movies: state.movies.movies,
-    genres: state.genres.genres
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Genre);
+export default connect(null, mapDispatchToProps)(Genre);
