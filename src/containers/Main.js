@@ -49,7 +49,7 @@ class Main extends Component {
     }
   }
 
-  decrement = () =>{
+  decrement = () => {
     const {number} = this.state
     if (number >= 0.5) {
       this.setState({
@@ -92,7 +92,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    movies: state.movies.movies,
+    movies: state.movies,
     selectedGenres: state.selectedGenres
   }
 }
