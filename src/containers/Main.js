@@ -56,7 +56,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  console.log(state.selectedGenres);
   return {
     movies: state.movies.movies,
     genres: state.genres.genres,

@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import Genre from '../components/Genre';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import styled from 'styled-components';
 import { selectGenre } from '../actions';
 
+const StyledDiv = styled.div`
+  display: flex;
+  justify-content: center;
+`
 class Genres extends Component {
 
   constructor(props) {
@@ -22,7 +27,7 @@ class Genres extends Component {
 
   render() {
     const {validGenres, genres} = this.props
-    return this.renderValidGenres()
+    return <StyledDiv>{this.renderValidGenres()}</StyledDiv>
   }
 }
 function mapDispatchToProps(dispatch) {
