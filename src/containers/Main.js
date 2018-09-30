@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {uniq, flatten, isNil} from 'lodash';
+import { uniq, flatten, isNil } from 'lodash';
 import { fetchMovies, fetchGenres } from '../actions';
-import {Movies, Genres, PopularityFilter} from './';
+import { Movies, Genres, PopularityFilter } from './';
 
 class Main extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      selectedMovies: []
-    }
+    this.state = {}
   }
 
   componentWillMount() {
@@ -32,8 +30,8 @@ class Main extends Component {
   }
 
   render() {
-    const {movies, genres, validGenres} = this.props
-    console.log(movies, genres)
+    const {movies, genres, selectedGenres} = this.props
+    if(selectedGenres.length > 0) console.log('selectedGenres', selectedGenres)
     if (isNil(movies && genres)) {
       return(
         <div>
@@ -45,7 +43,7 @@ class Main extends Component {
         <div>
           <Genres validGenres={this.state.validGenres} genres={genres} />
           <PopularityFilter />
-          <Movies movies={movies} />
+          <Movies movies={movies} selectedGenres={selectedGenres} />
           Hello
         </div>
       )
@@ -58,11 +56,11 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
+  console.log(state.selectedGenres);
   return {
     movies: state.movies.movies,
     genres: state.genres.genres,
-    selectedGenres: state.selectedGenres.selectedGenres
+    selectedGenres: state.selectedGenres
   }
 }
 

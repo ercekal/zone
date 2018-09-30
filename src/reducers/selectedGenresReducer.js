@@ -1,17 +1,11 @@
 
 import { UPDATE_GENRE } from '../actions'
 import {includes} from 'lodash'
-const INITIAL_STATE = {
-  selectedGenres: []
-}
-export default function(state = INITIAL_STATE, action) {
+
+export default function(state = [], action) {
   switch (action.type) {
     case UPDATE_GENRE:
-    !includes(state.selectedGenres, action.payload) ?
-    {
-      ...state,
-      selectedGenres: state.selectedGenres.push(action.payload)
-    } : state.selectedGenres = state.selectedGenres.filter(i => i !== action.payload)
+    return !includes(state, action.payload) ? [...state, action.payload] : state = state.filter(i => i !== action.payload)
   }
   return state;
 }

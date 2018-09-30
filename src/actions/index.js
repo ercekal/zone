@@ -31,7 +31,6 @@ export function fetchGenres() {
 }
 
 export function selectGenre(genre) {
-  console.log(genre)
   return dispatch => {
     dispatch({
       type: UPDATE_GENRE,

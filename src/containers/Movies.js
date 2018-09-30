@@ -1,22 +1,15 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import {uniq, flatten, isNil} from 'lodash';
-import { fetchMovies, fetchGenres } from '../actions/index';
+import React from 'react';
+import { isEmpty } from 'lodash';
+import Movie from '../components/Movie'
 
-export default class Movies extends Component {
-
-  constructor(props) {
-    super(props)
+const Movies = ({movies, selectedGenres}) => {
+  if(isEmpty(selectedGenres)) {
+      return movies.map((movie, i) => <Movie movie={movie} key={i} /> )
   }
-
-  render() {
-    // const {movies} = this.props
-      return (
-        // movies.map(movie => <Movie movie={movie} /> )
-        <div>
-          yolo
-        </div>
-      )
-    }
-  }
+  return selectedGenres.map(genreId => {
+    const selectedMovies = movies.map(m => m.genre_ids.includes(genreId))
+    console.log(selectedMovies)
+    return selectedMovies.map((movie, i) => <Movie movie={movie} key={i} /> )
+  })
+}
+export default Movies

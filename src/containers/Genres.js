@@ -8,15 +8,12 @@ class Genres extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      validGenres: []
-    }
   }
 
   renderValidGenres = () => {
     const {validGenres, genres} = this.props
     const genreList = genres.filter(genre => validGenres.includes(genre.id))
-    return genreList.map(genre => <Genre genre={genre} onChange={(e) => this.onGenreChange(genre, e)} />)
+    return genreList.map((genre, i) => <Genre genre={genre} onChange={(e) => this.onGenreChange(genre, e)} key={i} />)
   }
 
   onGenreChange = (genre) => {
@@ -25,7 +22,6 @@ class Genres extends Component {
 
   render() {
     const {validGenres, genres} = this.props
-    console.log(validGenres, genres)
     return this.renderValidGenres()
   }
 }
