@@ -7,13 +7,13 @@ import { Movies, Genres, AverageVote } from './';
 import axios from 'axios';
 
 const API_KEY = "b0659a2e955ea3f4ebab1b70f16905bd"
-
+const NUMBER = 3
 class Main extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      number: 3
+      number: NUMBER
     }
   }
 
@@ -93,7 +93,6 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   return {
     movies: state.movies.movies,
-    // genres: state.genres.genres,
     selectedGenres: state.selectedGenres
   }
 }

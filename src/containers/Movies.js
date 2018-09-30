@@ -1,5 +1,5 @@
 import React from 'react';
-import { isEmpty, sortBy } from 'lodash';
+import { isEmpty, sortBy, intersection } from 'lodash';
 import Movie from '../components/Movie'
 
 const Movies = ({movies, selectedGenres, genres, averageVote}) => {
@@ -32,16 +32,17 @@ const Movies = ({movies, selectedGenres, genres, averageVote}) => {
       </div>
     )
   }
-  return selectedGenres.map(genreId => {
-    const selectedMovies = movies.filter(m => {
-      return m.genre_ids.includes(genreId)
-    })
-    return (
-      <div>
-        {movieAmount(aboveAverage(selectedMovies))}
-        {renderMovies(aboveAverage(selectedMovies))}
-      </div>
-    )
+
+  const selectedMovies = movies.filter(m => {
+    //checks if a movie's genre is included in selectedGenres
+    return !isEmpty(intersection(m.genre_ids, selectedGenres))
   })
+
+  return (
+    <div>
+      {movieAmount(aboveAverage(selectedMovies))}
+      {renderMovies(aboveAverage(selectedMovies))}
+    </div>
+  )
 }
 export default Movies
