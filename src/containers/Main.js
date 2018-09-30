@@ -3,13 +3,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { uniq, flatten, isNil } from 'lodash';
 import { fetchMovies, fetchGenres } from '../actions';
-import { Movies, Genres, PopularityFilter } from './';
+import { Movies, Genres, AverageVote } from './';
 
 class Main extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      number: 3
+    }
   }
 
   componentWillMount() {
@@ -29,9 +31,27 @@ class Main extends Component {
     }
   }
 
+  increment = () => {
+    const {number} = this.state
+    if (number <= 9.5) {
+      this.setState({
+        number: number + 0.5
+      });
+    }
+  }
+
+  decrement = () =>{
+    const {number} = this.state
+    if (number >= 0.5) {
+      this.setState({
+        number: number - 0.5
+      });
+    }
+  }
+
   render() {
     const {movies, genres, selectedGenres} = this.props
-    if(selectedGenres.length > 0) console.log('selectedGenres', selectedGenres)
+    const {number, validGenres} = this.state
     if (isNil(movies && genres)) {
       return(
         <div>
@@ -41,10 +61,16 @@ class Main extends Component {
     } else {
       return (
         <div>
-          <Genres validGenres={this.state.validGenres} genres={genres} />
-          <PopularityFilter />
-          <Movies movies={movies} genres={genres} selectedGenres={selectedGenres} />
-          Hello
+          <Genres validGenres={validGenres} genres={genres} />
+          <AverageVote
+            number={number}
+            increment={this.increment}
+            decrement={this.decrement} />
+          <Movies
+            movies={movies}
+            genres={genres}
+            selectedGenres={selectedGenres}
+            averageVote={number} />
         </div>
       )
     }
