@@ -1,48 +1,50 @@
-import React from 'react';
-import { isEmpty, sortBy, intersection } from 'lodash';
+import React, {PureComponent} from 'react';
+import { isEmpty, sortBy } from 'lodash';
 import Movie from '../components/Movie'
 
-const Movies = ({movies, selectedGenres, genres, averageVote}) => {
+class Movies extends PureComponent {
   // gets the collection of genre details of a movie
-  const genresList = (movie) => {
-    return genres.filter(g => movie.genre_ids.includes(g.id))
+  genresList(movie) {
+    return this.props.genres.filter(g => movie.genre_ids.includes(g.id))
   }
   //filters the list of movies based on the average vote
-  const aboveAverage = (list) => {
-    return list.filter(m => m.vote_average >= averageVote)
+  aboveAverage(list) {
+    return list.filter(m => m.vote_average >= this.props.averageVote)
   }
 
-  const renderMovies = (list) => {
+  renderMovies(list) {
     if (isEmpty(list)) return null
     //sorts the array by popularity and reverses it to descending order
-    return sortBy(aboveAverage(list), (m) => m.popularity).reverse()
+    return sortBy(this.aboveAverage(list), (m) => m.popularity).reverse()
       .map((movie, i) =>
-        <Movie movie={movie} genresList={genresList(movie)} key={i} />
+        <Movie movie={movie} genresList={this.genresList(movie)} key={i} />
       )
   }
-  const movieAmount = (list) => {
+  movieAmount(list) {
     return `There are ${list.length} movies within this filters`
   }
 
-  if(isEmpty(selectedGenres)) {
+  renderList(list) {
     return (
       <div>
-        {movieAmount(aboveAverage(movies))}
-        {renderMovies(aboveAverage(movies))}
+        {this.movieAmount(this.aboveAverage(list))}
+        {this.renderMovies(this.aboveAverage(list))}
       </div>
     )
   }
+  render () {
+    const {movies, selectedGenres} = this.props
 
-  const selectedMovies = movies.filter(m => {
-    //checks if a movie's genre is included in selectedGenres
-    return !isEmpty(intersection(m.genre_ids, selectedGenres))
-  })
+    if(isEmpty(selectedGenres)) {
+      return this.renderList(movies)
+    }
 
-  return (
-    <div>
-      {movieAmount(aboveAverage(selectedMovies))}
-      {renderMovies(aboveAverage(selectedMovies))}
-    </div>
-  )
+    const selectedMovies = movies.filter(m => {
+      //checks if a movie's genre includes all selected genres
+      return selectedGenres.every(elem => m.genre_ids.indexOf(elem) > -1)
+    })
+    return this.renderList(selectedMovies)
+  }
 }
+
 export default Movies
