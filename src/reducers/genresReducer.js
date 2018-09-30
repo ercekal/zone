@@ -1,11 +1,12 @@
 
-import { FETCH_GENRES } from '../actions'
+import { FETCH_GENRES, SELECT_GENRE } from '../actions'
 
 export default function(state = [], action) {
-  console.log(action);
   switch (action.type) {
     case FETCH_GENRES:
-    return {...state, genres: action.payload.genres };
+    return {...state, genres: action.payload };
+    // case SELECT_GENRE:
+    // return {...state, selectedGenres: action.payload.genres };
   }
   return state;
 }

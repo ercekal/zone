@@ -2,6 +2,7 @@ import axios from 'axios'
 
 export const FETCH_MOVIES = 'FETCH_MOVIES';
 export const FETCH_GENRES = 'FETCH_GENRES';
+export const SELECT_GENRE = 'SELECT_GENRE';
 
 const API_KEY = "b0659a2e955ea3f4ebab1b70f16905bd"
 
@@ -11,7 +12,7 @@ export function fetchMovies() {
     .then((res) => {
       dispatch({
         type: FETCH_MOVIES,
-        payload: res.data
+        payload: res.data.results
       })
     })
   }
@@ -23,8 +24,18 @@ export function fetchGenres() {
     .then((res) => {
       dispatch({
         type: FETCH_GENRES,
-        payload: res.data
+        payload: res.data.genres
       })
+    })
+  }
+}
+
+export function selectGenre(genre) {
+  console.log(genre)
+  return dispatch => {
+    dispatch({
+      type: SELECT_GENRE,
+      payload: genre.id
     })
   }
 }

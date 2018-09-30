@@ -11,10 +11,12 @@ export default class Movies extends Component {
   }
 
   render() {
-    const {movies} = this.props
+    // const {movies} = this.props
       return (
-        movies.map(movie => <Movie movie={movie} /> )
+        // movies.map(movie => <Movie movie={movie} /> )
+        <div>
+          yolo
+        </div>
       )
     }
   }
-  

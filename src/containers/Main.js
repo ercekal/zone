@@ -3,34 +3,38 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {uniq, flatten, isNil} from 'lodash';
 import { fetchMovies, fetchGenres } from '../actions';
-import {Movies, Genres} from './'
+import {Movies, Genres, PopularityFilter} from './';
 
 class Main extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      validGenres: []
+      selectedMovies: []
     }
   }
 
   componentWillMount() {
-    this.props.fetchMovies()
     this.props.fetchGenres()
+    this.props.fetchMovies()
   }
 
   componentWillReceiveProps(nextProps) {
     const {movies} = nextProps
-    const genresList = movies.map(m => {
-      return m.genre_ids
-    })
-    this.setState({
-      validGenres: uniq(flatten(genresList))
-    })
+    if (movies) {
+      console.log(movies)
+      const genresList = movies.map(m => {
+        return m.genre_ids
+      })
+      this.setState({
+        validGenres: uniq(flatten(genresList))
+      })
+    }
   }
 
   render() {
-    const {movies, genres} = this.props
+    const {movies, genres, validGenres} = this.props
+    console.log(movies, genres)
     if (isNil(movies && genres)) {
       return(
         <div>
@@ -40,8 +44,10 @@ class Main extends Component {
     } else {
       return (
         <div>
-          <Movies movies={movies} />
           <Genres validGenres={this.state.validGenres} genres={genres} />
+          <PopularityFilter />
+          <Movies movies={movies} />
+          Hello
         </div>
       )
     }
@@ -53,9 +59,11 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
+  console.log(state);
   return {
     movies: state.movies.movies,
-    genres: state.genres.genres
+    genres: state.genres.genres,
+    selectedGenres: state.genres
   }
 }
 

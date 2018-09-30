@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
+import Genre from '../components/Genre';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {uniq, flatten, isNil} from 'lodash';
-import { fetchMovies, fetchGenres } from '../actions';
-import {MoviesList} from './components'
+import { selectGenre } from '../actions';
 
-class Movies extends Component {
+class Genres extends Component {
 
   constructor(props) {
     super(props)
@@ -14,46 +13,24 @@ class Movies extends Component {
     }
   }
 
-  componentWillMount() {
-    this.props.fetchGenres()
+  renderValidGenres = () => {
+    const {validGenres, genres} = this.props
+    const genreList = genres.filter(genre => validGenres.includes(genre.id))
+    return genreList.map(genre => <Genre genre={genre} onChange={(e) => this.onGenreChange(genre, e)} />)
   }
 
-  componentWillReceiveProps(nextProps) {
-    const {movies} = nextProps
-    const genresList = movies.map(m => {
-      return m.genre_ids
-    })
-    this.setState({
-      validGenres: uniq(flatten(genresList))
-    })
+  onGenreChange = (genre) => {
+    this.props.selectGenre(genre)
   }
 
   render() {
-    const {movies, genres} = this.props
-    if (isNil(movies && genres)) {
-      return(
-        <div>
-          Loading...
-        </div>
-      )
-    } else {
-      console.log(this.props);
-      return (
-        <div>Hello world</div>
-      )
-    }
+    const {validGenres, genres} = this.props
+    console.log(validGenres, genres)
+    return this.renderValidGenres()
   }
 }
-
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchMovies, fetchGenres }, dispatch)
+  return bindActionCreators({ selectGenre }, dispatch)
 }
 
-function mapStateToProps(state) {
-  return {
-    movies: state.movies.movies,
-    genres: state.genres.genres
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Movies);
+export default connect(null, mapDispatchToProps)(Genres);
