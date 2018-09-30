@@ -43,7 +43,7 @@ class Main extends Component {
         <div>
           <Genres validGenres={this.state.validGenres} genres={genres} />
           <PopularityFilter />
-          <Movies movies={movies} selectedGenres={selectedGenres} />
+          <Movies movies={movies} genres={genres} selectedGenres={selectedGenres} />
           Hello
         </div>
       )
