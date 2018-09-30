@@ -3,19 +3,32 @@ import { isEmpty, sortBy } from 'lodash';
 import Movie from '../components/Movie'
 
 const Movies = ({movies, selectedGenres, genres, averageVote}) => {
+  // gets the collection of genre details of a movie
   const genresList = (movie) => {
     return genres.filter(g => movie.genre_ids.includes(g.id))
   }
+  //filters the list of movies based on the average vote
   const aboveAverage = (list) => {
     return list.filter(m => m.vote_average >= averageVote)
+  }
+
+  const renderMovies = (list) => {
+    if (isEmpty(list)) return null
+    //sorts the array by popularity and reverses it to descending order
+    return sortBy(aboveAverage(list), (m) => m.popularity).reverse()
+      .map((movie, i) =>
+        <Movie movie={movie} genresList={genresList(movie)} key={i} />
+      )
+  }
+  const movieAmount = (list) => {
+    return `There are ${list.length} movies within this filters`
   }
 
   if(isEmpty(selectedGenres)) {
     return (
       <div>
-        There are {aboveAverage(movies).length} movies within this filters
-        {sortBy(aboveAverage(movies), (m) => m.popularity).reverse()
-          .map((movie, i) => <Movie movie={movie} genresList={genresList(movie)} key={i} /> )}
+        {movieAmount(aboveAverage(movies))}
+        {renderMovies(aboveAverage(movies))}
       </div>
     )
   }
@@ -25,9 +38,8 @@ const Movies = ({movies, selectedGenres, genres, averageVote}) => {
     })
     return (
       <div>
-        There are {aboveAverage(selectedMovies).length} movies within this filters
-        {sortBy(aboveAverage(selectedMovies), (m) => m.popularity).reverse()
-          .map((movie, i) => <Movie movie={movie} genresList={genresList(movie)} key={i} /> )}
+        {movieAmount(aboveAverage(selectedMovies))}
+        {renderMovies(aboveAverage(selectedMovies))}
       </div>
     )
   })

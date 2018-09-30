@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { uniq, flatten, isNil } from 'lodash';
-import { fetchMovies, fetchGenres } from '../actions';
+import { fetchMovies } from '../actions';
 import { Movies, Genres, AverageVote } from './';
+import axios from 'axios';
+
+const API_KEY = "b0659a2e955ea3f4ebab1b70f16905bd"
 
 class Main extends Component {
 
@@ -15,8 +18,14 @@ class Main extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchGenres()
+    //componentWillMount is becoming deprecated however wanted
+    //to show that redux API call can also be done
     this.props.fetchMovies()
+  }
+
+  componentDidMount() {
+    axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`)
+    .then((res) => this.setState({genres: res.data.genres}))
   }
 
   componentWillReceiveProps(nextProps) {
@@ -50,8 +59,8 @@ class Main extends Component {
   }
 
   render() {
-    const {movies, genres, selectedGenres} = this.props
-    const {number, validGenres} = this.state
+    const {movies, selectedGenres} = this.props
+    const {number, validGenres, genres} = this.state
     if (isNil(movies && genres)) {
       return(
         <div>
@@ -78,13 +87,13 @@ class Main extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchMovies, fetchGenres }, dispatch)
+  return bindActionCreators({ fetchMovies }, dispatch)
 }
 
 function mapStateToProps(state) {
   return {
     movies: state.movies.movies,
-    genres: state.genres.genres,
+    // genres: state.genres.genres,
     selectedGenres: state.selectedGenres
   }
 }
