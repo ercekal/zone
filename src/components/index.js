@@ -1,2 +1,5 @@
 export {default as Movie} from './Movie'
+export {default as Movies} from './Movies'
 export {default as Genre} from './Genre'
+export {default as Genres} from './Genres'
+export {default as AverageVote} from './AverageVote'

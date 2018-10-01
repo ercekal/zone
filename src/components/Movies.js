@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import { isEmpty, sortBy } from 'lodash';
-import Movie from '../components/Movie'
+import Movie from './Movie'
 
 class Movies extends PureComponent {
   // gets the collection of genre details of a movie
@@ -21,7 +21,8 @@ class Movies extends PureComponent {
       )
   }
   movieAmount(list) {
-    return `There are ${list.length} movies within this filters`
+    const isPlural = list.length > 1
+    return `There ${isPlural ? 'are' : 'is'} ${list.length} movie${isPlural ? 's' : ''} within this filters`
   }
 
   renderList(list) {

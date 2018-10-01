@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { uniq, flatten, isNil } from 'lodash';
 import { fetchMovies } from '../actions';
-import { Movies, Genres, AverageVote } from './';
+import { Movies, Genres, AverageVote } from '../components';
 import axios from 'axios';
 
 const API_KEY = "b0659a2e955ea3f4ebab1b70f16905bd"
